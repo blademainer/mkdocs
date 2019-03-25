@@ -1,0 +1,21 @@
+language: shell
+services:
+- docker
+env:
+  global:
+  - BASE_REPO=pjoc/mkdocs
+  - DOCKER_TAG=${TRAVIS_COMMIT:0:7}
+  - DEV_REPO=${BASE_REPO}:$DOCKER_TAG
+  - RELEASE_REPO=${BASE_REPO}:$TRAVIS_TAG
+  - LATEST_REPO=${BASE_REPO}:latest
+  - secure: jXXv1how2A8cJ2cWcOyajXSUo8/JCeLxcwq2aLJwvAQsrBVaEqwx79vngfREreGwosdP3DN/nxysAY2mSn66FlzXkGnz5UjghJcfrghrH+zbkwBz/+bMj5blnvDTQBde1ycMOhUp5jsIzaEu5oHZP4R40z/T8Jvz2TdF6PGCg78s22teR0i4NHgdW1XiPStq/Kaea6Q/c4hi0toi7SLKnbCM0i1r/Q2zoziqnip/J5N2XeU9rGuJg85OjE1pcSSsTrBKCWfBG6o9Ujac6sWqz8N2Ojw6yUNpaeG0edCRdMpm5u/k5rTDeEnhK4AZWQp/JfGz5Cnqc8iCq0bb8ch+xRYwX0A9bU5soKgTmuK53X+hNeDVNpRtegoQHKS/7d88072r+dH/7M9x2nqnLkh8gubh+46m5xy/JOzeFDe3VNMHbxovcBdVINgdee+PyFtecH7QbwWlfIB8ZPr6NSuXin2SuamMeEv446NJLEcuc5fpOZEh4PXRSKe6DoKKwCvCGo3sYYbGIpiUTGCAP5xfsvKpyNCvUTPCGv8X0sdGwOico6n4JqkH/F1mPw9oOmKf0wu0puiZfcBUoUgYnfI3eeQNV6XseEGiWNUoMOyc5MRtRqGkstKSblgPL9yIZVChn3Gg2gS/oaAXM17C9Df+9q5/N0tTuXWke9p220j+aVQ=
+  - secure: cZjnzfxdjbvcKN3YGoWP9k2A9+UsjProO/cFr+jQA1RMhzSIzW7UcAXlPpxEmkqbJ2EC+M9bs59GAlJa/KoK4exRn36j3srEJBUUCvkzYxIcGZ6K7M79YthYlZj0BuimpsAWn7uvoncpj12SE01rU57zHeDzUzkQt5LL4KzsWTxIyWBAjlQ7OHecVnVtBRce0bdweAHAIywC0LPer0RC9vc3lhi2GufnSdH7D9kv8iwa50whWsO0wH1o02WNZKwi4RGaRbExLi5+W80tzBqWdlCheZP6Rdg3EOxz+9fA+j6h5OP4IRNKemjen0737SjRJwPShKGcq2lXsqSuJQx3CwAHrKCpIE5LPs8zgURs/mQ9w2g74/0miehRG8iGj7+a8Aw4+0mQeJlNjL+J171TcMK0gM41iGxUE9jxP6p5P6Bfp7xiwQQD3MAVXgACjcpVl6AbmSl6svA7IA74T91KBlWnok8cMrvYxsPhFwKeZiv/5eLbHjq6m+1hwzpHEbUcBDd9yA1FFt09xgrwmxMVu2559yXxbX0sjr05D5TpxqSApMzoX4P0e6kwNtK8QygQ4rWmxi8ebazuiDfr3JNplkg+YoKxOXRJkxQ6vIO1ESf/ZLe/D4k64+NmK1mPtUjuT7sUDTNldMak4Dk8qa4Z6K2lyyFHdWeEO8+x6s3YgFk=
+before_install:
+- env
+- docker login -u$DOCKER_USER -p$DOCKER_PASS
+install:
+- if [[ -z "$TRAVIS_TAG" ]]; then docker build nginx -t $DEV_REPO && docker push $DEV_REPO;
+  fi
+- if [[ -n "$TRAVIS_TAG" ]]; then docker pull $DEV_REPO && docker tag $DEV_REPO $RELEASE_REPO
+  && docker tag $DEV_REPO $LATEST_REPO && docker push $RELEASE_REPO && docker push
+  $LATEST_REPO; fi
