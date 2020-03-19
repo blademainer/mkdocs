@@ -3,13 +3,14 @@ FROM centos
 ENV LC_ALL=en_US.utf-8
 ENV LANG=en_US.utf-8
 #ADD plantuml.jar /opt/plantuml/
+# latest: https://sourceforge.net/projects/plantuml/files/latest/download
 RUN yum install -y epel-release && \
     yum update -y && \
     yum install -y graphviz java-1.8.0-openjdk python36 curl git && \
     mv /usr/bin/python /usr/bin/python2.4 && ln -s /usr/bin/python3.6 /usr/bin/python && python -V && \
     curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && python get-pip.py && \
     mkdir -p /opt/plantuml/ && \
-    curl -L https://sourceforge.net/projects/plantuml/files/latest/download -o /opt/plantuml/plantuml.jar
+    curl -L https://sourceforge.net/projects/plantuml/files/1.2020.3/plantuml.1.2020.3.jar/download -o /opt/plantuml/plantuml.jar
 ADD plantuml /bin/
 RUN chmod +x /bin/plantuml
 RUN mkdir /js
