@@ -23,7 +23,8 @@ COPY js/umlconvert.js /js/
 #RUN yum install -y python36
 #RUN pip3 install --upgrade pip; 
 RUN pip install mkdocs-cinder; 
-RUN pip install mkdocs; 
+RUN pip install mkdocs-material;
+RUN pip install mkdocs;
 RUN pip install mkdocs-bootstrap; 
 RUN pip install mkdocs-bootswatch; 
 RUN pip install pymdown-extensions; 
