@@ -6,7 +6,7 @@ FROM centos:8
 RUN yum install -y epel-release && \
     yum update -y && \
     yum reinstall -y glibc-common && \
-    yum install -y telnet net-tools kde-l10n-Chinese graphviz java-1.8.0-openjdk python36 curl git && \
+    yum install -y telnet net-tools java-1.8.0-openjdk python36 curl git && \
     yum clean all && \
     rm -rf /tmp/* rm -rf /var/cache/yum/* && \
     ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
