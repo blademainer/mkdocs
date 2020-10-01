@@ -1,11 +1,19 @@
 FROM centos
 
-ENV LC_ALL=en_US.utf-8
-ENV LANG=en_US.utf-8
+ENV LANG=zh_CN.UTF-8 \
+    LANGUAGE=zh_CN:zh \
+    LC_ALL=zh_CN.UTF-8
+
 #ADD plantuml.jar /opt/plantuml/
 # latest: https://sourceforge.net/projects/plantuml/files/latest/download
 RUN yum install -y epel-release && \
     yum update -y && \
+    yum reinstall -y glibc-common && \
+    yum install -y telnet net-tools && \
+    yum clean all && \
+    rm -rf /tmp/* rm -rf /var/cache/yum/* && \
+    localedef -c -f UTF-8 -i zh_CN zh_CN.UTF-8 && \
+    ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
     yum install -y graphviz java-1.8.0-openjdk python36 curl git && \
     ln -s /usr/bin/python3.6 /usr/bin/python && python -V && \
     curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && python get-pip.py && \
