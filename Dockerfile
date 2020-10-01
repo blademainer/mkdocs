@@ -9,12 +9,11 @@ ENV LANG=zh_CN.UTF-8 \
 RUN yum install -y epel-release && \
     yum update -y && \
     yum reinstall -y glibc-common && \
-    yum install -y telnet net-tools && \
+    yum install -y telnet net-tools kde-l10n-Chinese graphviz java-1.8.0-openjdk python36 curl git && \
     yum clean all && \
     rm -rf /tmp/* rm -rf /var/cache/yum/* && \
     localedef -c -f UTF-8 -i zh_CN zh_CN.UTF-8 && \
     ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
-    yum install -y graphviz java-1.8.0-openjdk python36 curl git && \
     ln -s /usr/bin/python3.6 /usr/bin/python && python -V && \
     curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && python get-pip.py && \
     mkdir -p /opt/plantuml/ && \
