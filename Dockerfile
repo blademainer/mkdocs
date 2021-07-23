@@ -32,6 +32,7 @@ RUN pip install mkdocs-bootstrap;
 RUN pip install mkdocs-bootswatch; 
 RUN pip install pymdown-extensions; 
 RUN pip install plantuml-markdown;
+RUN pip install mkdocs-render-swagger-plugin;
 
 WORKDIR /docs
 #ENTRYPOINT ["mkdocs"]
